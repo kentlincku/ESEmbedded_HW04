@@ -45,3 +45,25 @@ This is the hw04 sample. Please follow the steps below.
 --------------------
 
 Take your note here if you want. (Optional)
+HW04
+===
+## 1. 實驗題目
+定義`READ_BIT(addr, bit)`並實作出使用userpin控制LED燈。
+## 2. 實驗步驟
+1. 定義`#define READ_BIT(addr, bit) ((REG(addr) & (UINT32_1 << (bit))))`於reg.h中
+由`00000001 & addr`可以找出要測試位置的值
+
+2. 修改blink.c檔案，由使用手冊中可以看到userpin的腳位是PA0，在初始化PA0時，需要將mode改為input，並且修改PUPDR為10
+
+
+```
+	SET_BIT(RCC_BASE + RCC_AHB1ENR_OFFSET, GPIO_EN_BIT(GPIO_PORTA));
+	CLEAR_BIT(GPIO_BASE(GPIO_PORTA) + GPIOx_MODER_OFFSET, 1);
+	CLEAR_BIT(GPIO_BASE(GPIO_PORTA) + GPIOx_MODER_OFFSET, 0);
+	SET_BIT(GPIO_BASE(GPIO_PORTA) + GPIOx_PUPDR_OFFSET, 1);
+	CLEAR_BIT(GPIO_BASE(GPIO_PORTA) + GPIOx_PUPDR_OFFSET, 0);
+```
+![](https://github.com/kentlincku/ESEmbedded_HW04/blob/master/reg.png)
+![](https://github.com/kentlincku/ESEmbedded_HW04/blob/master/code.png)
+
+
